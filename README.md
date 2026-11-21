@@ -23,7 +23,7 @@ small plan, and every file is a separate, focused request.
 ## Install
 
 ```bash
-pip install fast-chimera
+pip install git+https://github.com/3bdel7med/FastAPI_Chimera.git
 export GEMINI_API_KEY=...        # or put it in a .env file in the directory you run the tool from
 ```
 
