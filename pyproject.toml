@@ -1,0 +1,64 @@
+[build-system]
+requires = ["setuptools>=77.0.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fast-chimera"
+version = "0.3.0"
+description = "Phased, AI-powered project builder for FastAPI: describe a product, review its features, and generate it step by step."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Abdelhamed Fathy", email = "abdelhmedfathy372@gmail.com" }]
+requires-python = ">=3.10"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Framework :: FastAPI",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "typer>=0.12.0",
+    "rich>=13.0.0",
+    "pydantic>=2.0.0",
+    "pydantic-settings>=2.0.0",
+    "libcst>=1.0.0",
+    "httpx>=0.24.0",
+]
+
+[project.optional-dependencies]
+# fastapi/sqlalchemy/... are only needed to run the end-to-end test against a generated project.
+dev = [
+    "pytest>=7.0.0",
+    "ruff>=0.5.0",
+    "mypy>=1.8.0",
+    "fastapi>=0.110",
+    "sqlalchemy>=2.0",
+    "bcrypt>=4.0",
+    "pyjwt>=2.8",
+    "email-validator>=2.0",
+]
+
+[project.scripts]
+fast-chimera = "fast_chimera.cli:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+fast_chimera = ["py.typed"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["B008", "B027"]  # B008: typer uses calls in argument defaults; B027: LlmClient.aclose is an intentional no-op hook
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true
